@@ -27,7 +27,7 @@ class CustomLayout extends React.Component {
 
             {authenticated ? (
               <React.Fragment>
-                <Link to={`/profiles/${this.props.userID}`}>
+                <Link to={`/profile/${this.props.userID}`}>
                   <Menu.Item header>Profile</Menu.Item>
                 </Link>
                 {
