@@ -1,30 +1,41 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
+import axios from "axios";
+import * as actionTypes from "./actionTypes";
 
-import authReducer from "./store/reducers/auth";
-import assignmentReducer from "./store/reducers/assignments";
-import gradedAssignmentReducer from "./store/reducers/gradedAssignments";
+const getGradedASNTListStart = () => {
+    return {
+        type: actionTypes.GET_GRADED_ASSIGNMENT_LIST_START
+    };
+};
 
-const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const getGradedASNTListSuccess = assignments => {
+    return {
+        type: actionTypes.GET_GRADED_ASSIGNMENTS_LIST_SUCCESS,
+        assignments
+    };
+};
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  assignments: assignmentReducer,
-  gradedAssignments: gradedAssignmentReducer
-});
+const getGradedASNTListFail = error => {
+    return {
+        type: actionTypes.GET_GRADED_ASSIGNMENTS_LIST_FAIL,
+        error: error
+    };
+};
 
-const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));
-
-const app = (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
-
-ReactDOM.render(app, document.getElementById("root"));
-registerServiceWorker();
+export const getGradedASNTS = (username, token) => {
+    return dispatch => {
+        dispatch(getGradedASNTListStart());
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`
+        };
+        axios
+            .get(`http://127.0.0.1:8000/graded-assignments/?username=${username}`)
+            .then(res => {
+                const assignments = res.data;
+                dispatch(getGradedASNTListSuccess(assignments));
+            })
+            .catch(err => {
+                dispatch(getGradedASNTListFail(err));
+            });
+    };
+};
