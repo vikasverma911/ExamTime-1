@@ -37,3 +37,12 @@ class GradedAssignmentListView(ListAPIView):
 class GradedAssignmentCreateView(CreateAPIView):
     serializer_class = GradedAssignmentSerializer
     queryset = GradedAssignment.objects.all()
+
+    def post(self, request):
+        print(request.data)
+        serializer = GradedAssignmentSerializer(data=request.data)
+        serializer.is_valid()
+        graded_assignment = serializer.create(request)
+        if graded_assignment:
+            return Response(status=HTTP_201_CREATED)
+        return Response(status=HTTP_400_BAD_REQUEST)
