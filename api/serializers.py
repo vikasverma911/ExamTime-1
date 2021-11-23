@@ -60,7 +60,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
 class GradedAssignmentSerializer(serializers.ModelSerializer):
     student = StringSerializer(many=False)
-
+    assignment = StringSerializer(many=False)
     class Meta:
         model = GradedAssignment
         fields = ('__all__')
