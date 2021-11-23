@@ -29,8 +29,8 @@ class AssignmentList extends React.PureComponent {
                         <Card
                         link color={"blue"} as={Link} to={`/assignments/${card.id}`}
                             key = {card.id}
-                            header = {card.teacher}
-                            description={card.title}
+                            header={card.title}
+                            description={`By:  ${card.teacher}`}
                         />
                 ))}
             </Card.Group>
