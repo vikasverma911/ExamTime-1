@@ -1,3 +1,4 @@
+// File contains backend for result of every assignment given by each student
 import React from "react";
 // import { Progress } from "antd";
 import { Progress, Segment } from 'semantic-ui-react'
