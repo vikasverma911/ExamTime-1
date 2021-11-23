@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+import { message } from "antd";
 
 export const authStart = () => {
    return {
@@ -59,6 +60,9 @@ export const authLogin = (username, password) => {
             dispatch(checkAuthTimeout(3600));
          })
          .catch(err => {
+            const mess = err.response.data
+            const mess2 = mess[Object.keys(mess)[0]][0]
+            message.error(mess2)
             dispatch(authFail(err));
          });
    };
@@ -97,6 +101,9 @@ export const authSignup = (
             dispatch(checkAuthTimeout(3600));
          })
          .catch(err => {
+            const mess = err.response.data
+            const mess2 = mess[Object.keys(mess)[0]][0]
+            message.error(mess2)
             dispatch(authFail(err));
          });
    };
