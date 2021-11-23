@@ -1,5 +1,5 @@
 import React from "react";
-
+//this is about page
 export default function About() {
    return (
       <section id="about">
