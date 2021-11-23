@@ -10,7 +10,8 @@ import {
 import { connect } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import { authLogin } from "../store/actions/auth";
-
+import { message } from "antd";
+import { AntDesignOutlined } from "@ant-design/icons";
 class LoginForm extends React.Component {
   state = {
     username: "",
@@ -43,7 +44,7 @@ class LoginForm extends React.Component {
           <Header as="h2" color="teal" textAlign="center">
             Log-in to your account
           </Header>
-          {error && <p>{this.props.error.message}</p>}
+          {/* {error && <p>{this.props.error.message}</p>} */}
 
           <React.Fragment>
             <Form size="large" onSubmit={this.handleSubmit}>
