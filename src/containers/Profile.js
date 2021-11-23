@@ -21,6 +21,7 @@ class Profile extends React.PureComponent {
     }
 
     render() {
+        console.log(this.props.gradedAssignments)
         return (
             <Hoc>
                 {this.props.loading ? (
@@ -30,8 +31,8 @@ class Profile extends React.PureComponent {
                         <h1>Hi {this.props.username}</h1>
                         <List
                             size="large"
-                            dataSource={this.props.gradedAssignments}
-                            renderItem={a => <Result key={a.id} grade={a.grade} />}
+                            dataSource={this.props.gradedAssignments.reverse()}
+                            renderItem={a => <Result key={a.id} grade={a.grade} title={a.assignment}/>}
                         />
                     </Hoc>
                 )}
