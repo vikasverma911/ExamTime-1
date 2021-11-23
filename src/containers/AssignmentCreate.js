@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Divider } from "antd";
+import { Form, Input, Button, Divider, message } from "antd";
 import QuestionForm from "./QuestionForm";
 import Hoc from "../hoc/hoc";
 import { createASNT } from "../store/actions/assignments";
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-
+import { Redirect } from "react-router-dom";
 
 function AssignmentCreate(props) {
 
     const [formCount, setFormCount] = useState(0);
-
+    const [redirectToReferrer, setredirectToReferrer] = useState(false);
     const remove = () => {
         setFormCount(formCount - 1)
     };
@@ -21,7 +21,8 @@ function AssignmentCreate(props) {
 
 
     const onFinish = values => {
-        console.log('Received values of form:', values);
+        message.success("Assignment Created!");
+        //   console.log('Received values of form:', values);
         const qq = Object.values(values.questions)
         const aa = Object.values(values.answers)
         const cc = Object.values(values.choices)
@@ -33,13 +34,14 @@ function AssignmentCreate(props) {
                 answer: aa[i]
             });
         }
-        console.log(questions)
+        //   console.log(questions)
         const asnt = {
             teacher: props.username,
             title: values.title,
             questions
         };
         props.createASNT(props.token, asnt);
+        setredirectToReferrer(true);
     };
 
     const questions = [];
@@ -59,7 +61,9 @@ function AssignmentCreate(props) {
             </Hoc>
         );
     }
-
+    if (redirectToReferrer === true) {
+        return <Redirect to={`/list/`} />;
+    }
     return (
 
         <Form onFinish={onFinish} >
